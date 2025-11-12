@@ -1,0 +1,17 @@
+{
+  "1": {
+    "passcode": "alpha",
+    "hint": "Look under the big rock at the garden entrance.",
+    "next": "2"
+  },
+  "2": {
+    "passcode": "bravo",
+    "hint": "Check behind the red bench near the fountain.",
+    "next": "3"
+  },
+  "3": {
+    "passcode": "charlie",
+    "hint": "Final: the treasure is hidden beneath the loose floorboard in the pavilion.",
+    "next": null
+  }
+}
