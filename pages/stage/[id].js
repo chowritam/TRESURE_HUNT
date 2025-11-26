@@ -40,8 +40,8 @@ export default function Stage() {
         setLoading(false)
       }
     }
-    fetchStart()
-  }, [])
+    if (id === 'startQR') fetchStart()
+  }, [id])
 
   // Update QR stages when selectedRoute changes
   useEffect(() => {

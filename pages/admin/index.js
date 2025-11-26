@@ -26,7 +26,20 @@ export default function Admin() {
   }, [adminPass])
 
   function updateStage(id, field, value) {
-    setStages((s) => ({ ...s, [id]: { ...(s[id] || {}), [field]: value } }))
+    setStages((s) => {
+      const newStages = { ...s }
+      if (id === 'startQR') {
+        newStages.startQR = { ...newStages.startQR, [field]: value }
+      } else if (id === 'endQR') {
+        newStages.endQR = { ...newStages.endQR, [field]: value }
+      } else {
+        const [route, qr] = id.split('-')
+        if (newStages[route] && newStages[route][qr]) {
+          newStages[route][qr] = { ...newStages[route][qr], [field]: value }
+        }
+      }
+      return newStages
+    })
   }
 
   async function save() {
@@ -99,29 +112,77 @@ export default function Admin() {
       </div>
 
       <div style={{display:'grid',gap:12}}>
-        {Object.keys(stages).sort((a,b)=>Number(a)-Number(b)).map((id) => (
-          <div key={id} className="card">
-            <h3 style={{marginTop:0}}>Stage {id}</h3>
+        {/* Start QR */}
+        {stages.startQR && (
+          <div key="startQR" className="card">
+            <h3 style={{marginTop:0}}>Start QR</h3>
             <div className="field">
               <label>Passcode<br />
-                <input className="input" value={stages[id].passcode||''} onChange={(e)=>updateStage(id,'passcode',e.target.value)} />
+                <input className="input" value={stages.startQR.passcode||''} onChange={(e)=>updateStage('startQR','passcode',e.target.value)} />
               </label>
             </div>
             <div className="field">
               <label>Hint<br />
-                <input className="input" value={stages[id].hint||''} onChange={(e)=>updateStage(id,'hint',e.target.value)} />
+                <input className="input" value={stages.startQR.hint||''} onChange={(e)=>updateStage('startQR','hint',e.target.value)} />
               </label>
             </div>
             <div className="field">
-              <label>Next stage id (or empty)<br />
-                <input className="input" value={stages[id].next||''} onChange={(e)=>updateStage(id,'next',e.target.value||null)} />
+              <label>Next routes<br />
+                <input className="input" value={stages.startQR.nextRoutes?.join(', ')||''} onChange={(e)=>updateStage('startQR','nextRoutes',e.target.value.split(',').map(s=>s.trim()))} />
               </label>
             </div>
             <div style={{marginTop:8}}>
-              <button className="btn secondary" onClick={() => generateQR(id)} style={{marginRight:8}}>Generate QR for this stage</button>
+              <strong>Link:</strong> <a href={`${location.origin}/stage/startQR`} target="_blank">{`${location.origin}/stage/startQR`}</a>
             </div>
           </div>
+        )}
+
+        {/* Routes */}
+        {['route1', 'route2', 'route3'].map(route => (
+          stages[route] && Object.keys(stages[route]).map(qr => (
+            <div key={`${route}-${qr}`} className="card">
+              <h3 style={{marginTop:0}}>{route} - {qr}</h3>
+              <div className="field">
+                <label>Passcode<br />
+                  <input className="input" value={stages[route][qr].passcode||''} onChange={(e)=>updateStage(`${route}-${qr}`,'passcode',e.target.value)} />
+                </label>
+              </div>
+              <div className="field">
+                <label>Hint<br />
+                  <input className="input" value={stages[route][qr].hint||''} onChange={(e)=>updateStage(`${route}-${qr}`,'hint',e.target.value)} />
+                </label>
+              </div>
+              <div className="field">
+                <label>Next<br />
+                  <input className="input" value={stages[route][qr].next||''} onChange={(e)=>updateStage(`${route}-${qr}`,'next',e.target.value||null)} />
+                </label>
+              </div>
+              <div style={{marginTop:8}}>
+                <strong>Link:</strong> <a href={`${location.origin}/stage/${route}-${qr}`} target="_blank">{`${location.origin}/stage/${route}-${qr}`}</a>
+              </div>
+            </div>
+          ))
         ))}
+
+        {/* End QR */}
+        {stages.endQR && (
+          <div key="endQR" className="card">
+            <h3 style={{marginTop:0}}>End QR</h3>
+            <div className="field">
+              <label>Passcode<br />
+                <input className="input" value={stages.endQR.passcode||''} onChange={(e)=>updateStage('endQR','passcode',e.target.value)} />
+              </label>
+            </div>
+            <div className="field">
+              <label>Hint<br />
+                <input className="input" value={stages.endQR.hint||''} onChange={(e)=>updateStage('endQR','hint',e.target.value)} />
+              </label>
+            </div>
+            <div style={{marginTop:8}}>
+              <strong>Link:</strong> <a href={`${location.origin}/stage/endQR`} target="_blank">{`${location.origin}/stage/endQR`}</a>
+            </div>
+          </div>
+        )}
       </div>
 
       <div style={{marginTop:16}}>
