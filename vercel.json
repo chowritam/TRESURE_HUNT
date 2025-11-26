@@ -1,0 +1,10 @@
+{
+  "functions": {
+    "pages/api/**/*.js": {
+      "runtime": "@vercel/node"
+    }
+  },
+  "env": {
+    "ADMIN_PASS": "@admin_pass"
+  }
+}

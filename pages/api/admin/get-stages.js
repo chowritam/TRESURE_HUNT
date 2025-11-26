@@ -1,7 +1,6 @@
-import path from 'path'
-import fs from 'fs'
+import { kv } from '@vercel/kv'
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
   // Simple protection: check for ADMIN_PASS header if provided in deployment
   const adminPass = process.env.ADMIN_PASS || 'admin123'
   const provided = req.headers['x-admin-pass'] || req.headers['authorization'] || ''
@@ -10,10 +9,8 @@ export default function handler(req, res) {
     return res.status(401).json({ error: 'Unauthorized' })
   }
 
-  const dataPath = path.join(process.cwd(), 'data', 'stages.json')
   try {
-    const raw = fs.readFileSync(dataPath, 'utf8')
-    const stages = JSON.parse(raw)
+    const stages = await kv.get('stages') || {}
     return res.status(200).json(stages)
   } catch (err) {
     console.error('Failed to read stages', err)

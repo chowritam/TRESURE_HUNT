@@ -1,17 +1,92 @@
 {
-  "1": {
-    "passcode": "alpha",
-    "hint": "Look under the big rock at the garden entrance.",
-    "next": "2"
+  "startQR": {
+    "passcode": "startpass",
+    "hint": "Begin your treasure hunt here. Choose a route to start.",
+    "nextRoutes": ["route1", "route2", "route3"]
   },
-  "2": {
-    "passcode": "bravo",
-    "hint": "Check behind the red bench near the fountain.",
-    "next": "3"
+  "route1": {
+    "qr1": {
+      "passcode": "r1qr1",
+      "hint": "Hint for QR 1 in route 1",
+      "next": "qr2"
+    },
+    "qr2": {
+      "passcode": "r1qr2",
+      "hint": "Hint for QR 2 in route 1",
+      "next": "qr3"
+    },
+    "qr3": {
+      "passcode": "r1qr3",
+      "hint": "Hint for QR 3 in route 1",
+      "next": "qr4"
+    },
+    "qr4": {
+      "passcode": "r1qr4",
+      "hint": "Hint for QR 4 in route 1",
+      "next": "qr5"
+    },
+    "qr5": {
+      "passcode": "r1qr5",
+      "hint": "Hint for QR 5 in route 1",
+      "next": "endQR"
+    }
   },
-  "3": {
-    "passcode": "charlie",
-    "hint": "Final: the treasure is hidden beneath the loose floorboard in the pavilion.",
-    "next": null
+  "route2": {
+    "qr1": {
+      "passcode": "r2qr1",
+      "hint": "Hint for QR 1 in route 2",
+      "next": "qr2"
+    },
+    "qr2": {
+      "passcode": "r2qr2",
+      "hint": "Hint for QR 2 in route 2",
+      "next": "qr3"
+    },
+    "qr3": {
+      "passcode": "r2qr3",
+      "hint": "Hint for QR 3 in route 2",
+      "next": "qr4"
+    },
+    "qr4": {
+      "passcode": "r2qr4",
+      "hint": "Hint for QR 4 in route 2",
+      "next": "qr5"
+    },
+    "qr5": {
+      "passcode": "r2qr5",
+      "hint": "Hint for QR 5 in route 2",
+      "next": "endQR"
+    }
+  },
+  "route3": {
+    "qr1": {
+      "passcode": "r3qr1",
+      "hint": "Hint for QR 1 in route 3",
+      "next": "qr2"
+    },
+    "qr2": {
+      "passcode": "r3qr2",
+      "hint": "Hint for QR 2 in route 3",
+      "next": "qr3"
+    },
+    "qr3": {
+      "passcode": "r3qr3",
+      "hint": "Hint for QR 3 in route 3",
+      "next": "qr4"
+    },
+    "qr4": {
+      "passcode": "r3qr4",
+      "hint": "Hint for QR 4 in route 3",
+      "next": "qr5"
+    },
+    "qr5": {
+      "passcode": "r3qr5",
+      "hint": "Hint for QR 5 in route 3",
+      "next": "endQR"
+    }
+  },
+  "endQR": {
+    "passcode": "startpass",
+    "hint": "Congratulations! You completed the treasure hunt."
   }
 }
